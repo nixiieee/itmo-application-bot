@@ -2,6 +2,7 @@ import telebot
 import subprocess
 import reload
 from telebot import types
+import time
 
 programms_lists = {}
 
@@ -29,7 +30,8 @@ def get_nums(your_snils, type):
             output = "Данные о твоей заявке не найдены :("
     return output
 
-bot = telebot.TeleBot('5269737355:AAE589TcKSFehRo8PvTFPsExmBqR2c-5f-Q')
+
+bot = telebot.TeleBot('5269737355:AAFJrXBmJyBC4y1P7YeEYNDrABk5lDZe5C8')
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -78,4 +80,9 @@ def get_user_message(message):
         markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7)
         bot.send_message(message.chat.id, text="Выбери направление, которое тебя интересует.", reply_markup=markup)
 
-bot.polling(non_stop=True)
+if __name__ == '__main__':
+    try:
+        bot.polling(non_stop=True)
+    except Exception as e:
+        print(e)
+        time.sleep(15)
