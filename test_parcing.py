@@ -1,30 +1,30 @@
-from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 from time import sleep
-import os
+from bs4 import BeautifulSoup as bs
+
+class Applicant:
+    def __init__(self, num, category, priority, passport, consent):
+        self.num = num
+        self.category = category
+        self.priority = priority
+        self.passport = passport
+        self.consent = consent
 
 def get_html(url):
-
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    options.add_argument(
-        "user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36")
+    options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36")
     driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', options=options)
-    '''
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    '''
+
     driver.get(url)
 
-    sleep(1)
+    sleep(2)
 
     html = driver.page_source
+
     driver.close()
     driver.quit()
+
     return html
 
 def find_cat(page):
@@ -36,7 +36,7 @@ def find_cat(page):
         allcats.append(len(num))
     return allcats
 
-def make_programm_list(page, cats):
+def find_appl(page, cats):
     soup = bs(page, 'lxml')
     t = soup.find_all('div', class_='RatingPage_table__item__iH7yd')
     allappl = {}
@@ -63,20 +63,11 @@ def make_programm_list(page, cats):
                 category = j
                 break
             last += cats[j]
-        new_applicant = [position, category, priority, passport, consent]
+        new_applicant = Applicant(position, category, priority, passport, consent)
         allappl[snils] = new_applicant
     return allappl
 
 
-def get_all_lists():
-    lists = ["15997", "15998", "15999", "16000", "16025"]
-    programms_lists = {}
-    for programm_name in lists:
-        html = get_html("https://abit.itmo.ru/rating/bachelor/budget/"+programm_name)
-        cats = find_cat(html)
-        programms_lists[programm_name] = make_programm_list(html, cats)
-    return programms_lists
-
-
-
-
+page = get_html("https://abit.itmo.ru/rating/bachelor/budget/15997")
+cats = find_cat(page)
+print(find_appl(page, cats))

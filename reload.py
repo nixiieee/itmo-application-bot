@@ -2,6 +2,7 @@ import script
 import schedule
 import time
 
+
 programms_lists = script.get_all_lists()
 
 def get():

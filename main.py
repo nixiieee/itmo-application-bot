@@ -3,6 +3,8 @@ import subprocess
 import reload
 from telebot import types
 import time
+from datetime import datetime
+
 
 programms_lists = {}
 
@@ -18,14 +20,65 @@ def get_nums(your_snils, type):
     vals = list(programms_names.keys())
     output = "Твой номер в списках на поступление на направления: \n"
     if type == 5:
+        count = 0
         for programm_name in programms_names:
             if your_snils in programms_lists[programms_names[programm_name]]:
-                output += programm_name + " : " + programms_lists[programms_names[programm_name]][your_snils] + " \n"
+                found_appl = programms_lists[programms_names[programm_name]][your_snils]
+                if found_appl[3] and found_appl[4]:
+                    output += "<b><i>" + programm_name + "</i></b> : \n"
+                if found_appl[3] and not(found_appl[4]):
+                    output += "<b>" + programm_name + "</b> : \n"
+                if found_appl[4] and not(found_appl[3]):
+                    output += "<i>" + programm_name + "</i> : \n"
+                if not(found_appl[3]) and not(found_appl[4]):
+                    output += programm_name + " :\n"
+                output += "\t\t\t\tПриоритет: " + str(found_appl[2]) + "\n"
+                output += "\t\t\t\tРейтинговый номер: " + str(found_appl[0]) + "\n"
+                output += "\t\t\t\tКонкурс:"
+                if found_appl[1] == 0:
+                    output += " БВИ\n"
+                elif found_appl[1] == 1:
+                    output += " Целевая квота\n"
+                elif found_appl[1] == 2:
+                    output += " Особая квота\n"
+                elif found_appl[1] == 3:
+                    output += " Специальная квота\n"
+                elif found_appl[1] == 4:
+                    output += " Общий конкурс\n"
             else:
-                output += programm_name + " : -\n"
+                count += 1
+        if count == 5:
+            output = "Данные о твоей заявке не найдены :("
+        else:
+            output += "\n<i>Курсив</i> = согласие на зачисление, <b>жирный</b> = оригинал документа."
+            output += "\n<i>via @ITMOAdmissionBot at " + str(datetime.now())[:-7] + "</i>"
     else:
+        programm_name = vals[type]
         if your_snils in programms_lists[programms_names[vals[type]]]:
-            output += vals[type] + " : " + programms_lists[programms_names[vals[type]]][your_snils]
+            found_appl = programms_lists[programms_names[programm_name]][your_snils]
+            if found_appl[3] and found_appl[4]:
+                output += "<b><i>" + programm_name + "</i></b> : \n"
+            if found_appl[3] and not (found_appl[4]):
+                output += "<b>" + programm_name + "</b> : \n"
+            if found_appl[4] and not (found_appl[3]):
+                output += "<i>" + programm_name + "</i> : \n"
+            if not (found_appl[3]) and not (found_appl[4]):
+                output += programm_name + " :\n"
+            output += "\t\t\t\tПриоритет: " + str(found_appl[2]) + "\n"
+            output += "\t\t\t\tРейтинговый номер: " + str(found_appl[0]) + "\n"
+            output += "\t\t\t\tКонкурс:"
+            if found_appl[1] == 0:
+                output += " БВИ\n"
+            elif found_appl[1] == 1:
+                output += " Целевая квота\n"
+            elif found_appl[1] == 2:
+                output += " Особая квота\n"
+            elif found_appl[1] == 3:
+                output += " Специальная квота\n"
+            elif found_appl[1] == 4:
+                output += " Общий конкурс\n"
+            output += "\n<i>Курсив</i> = согласие на зачисление, <b>жирный</b> = оригинал документа."
+            output += "\n<i>via @ITMOAdmissionBot at " + str(datetime.now())[:-7] + "</i>"
         else:
             output = "Данные о твоей заявке не найдены :("
     return output
