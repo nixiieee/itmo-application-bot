@@ -13,7 +13,7 @@ def job():
     programms_lists = script.get_all_lists()
 
 def main():
-    schedule.every(15).minutes.do(job)
+    schedule.every(30).minutes.do(job)
     while True:
         schedule.run_pending()
         time.sleep(1)

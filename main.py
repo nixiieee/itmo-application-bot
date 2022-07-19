@@ -25,7 +25,7 @@ def get_nums(your_snils, type):
             if your_snils in programms_lists[programms_names[programm_name]]:
                 found_appl = programms_lists[programms_names[programm_name]][your_snils]
                 if found_appl[3] and found_appl[4]:
-                    output += "<b><i>" + programm_name + "</i></b> : \n"
+                    output += "<u>" + programm_name + "</u> : \n"
                 if found_appl[3] and not(found_appl[4]):
                     output += "<b>" + programm_name + "</b> : \n"
                 if found_appl[4] and not(found_appl[3]):
@@ -50,14 +50,14 @@ def get_nums(your_snils, type):
         if count == 5:
             output = "Данные о твоей заявке не найдены :("
         else:
-            output += "\n<i>Курсив</i> = согласие на зачисление, <b>жирный</b> = оригинал документа."
+            output += "\n<i>Курсив</i> = согласие на зачисление, <b>жирный</b> = оригинал документа, <u>подчеркнутый</u> = согласие и оригинал одновременно."
             output += "\n<i>via @ITMOAdmissionBot at " + str(datetime.now())[:-7] + "</i>"
     else:
         programm_name = vals[type]
         if your_snils in programms_lists[programms_names[vals[type]]]:
             found_appl = programms_lists[programms_names[programm_name]][your_snils]
             if found_appl[3] and found_appl[4]:
-                output += "<b><i>" + programm_name + "</i></b> : \n"
+                output += "<u>" + programm_name + "</u> : \n"
             if found_appl[3] and not (found_appl[4]):
                 output += "<b>" + programm_name + "</b> : \n"
             if found_appl[4] and not (found_appl[3]):
@@ -77,7 +77,7 @@ def get_nums(your_snils, type):
                 output += " Специальная квота\n"
             elif found_appl[1] == 4:
                 output += " Общий конкурс\n"
-            output += "\n<i>Курсив</i> = согласие на зачисление, <b>жирный</b> = оригинал документа."
+            output += "\n<i>Курсив</i> = согласие на зачисление, <b>жирный</b> = оригинал документа, <u>подчеркнутый</u> = согласие и оригинал одновременно."
             output += "\n<i>via @ITMOAdmissionBot at " + str(datetime.now())[:-7] + "</i>"
         else:
             output = "Данные о твоей заявке не найдены :("
@@ -85,13 +85,37 @@ def get_nums(your_snils, type):
 
 
 bot = telebot.TeleBot('5269737355:AAFJrXBmJyBC4y1P7YeEYNDrABk5lDZe5C8')
+joinedFile = open("joined.txt", "r")
+joinedUsers = set()
+for line in joinedFile:
+   joinedUsers.add(line.strip())
+
 @bot.message_handler(commands=['start'])
 def start(message):
+    if not str(message.chat.id) in joinedUsers:
+        joinedFile = open("joined.txt", "w")
+        joinedFile.write(str(message.chat.id) + "\n")
+        joinedUsers.add(message.chat.id)
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn = types.KeyboardButton("Узнать свое место в списках")
     markup.add(btn)
     bot.send_message(message.chat.id, "Привет! Чтобы узнать, на каком месте ты находишься в рейтинговых списках на поступление, нажми на кнопку.", reply_markup=markup)
 
+@bot.message_handler(commands=['special'])
+def special(message):
+    if message.chat.id == 596114319:
+        f = 0
+        for user in joinedUsers:
+            try:
+                bot.send_message(user, message.text[message.text.find(' '):])
+            except:
+                f = 1
+                joinedUsers.remove(user)
+    if f == 1:
+        joinedFile = open("joined.txt", "w")
+        joinedFile.truncate(0)
+        for user in joinedUsers:
+            joinedFile.write(user + "\n")
 
 @bot.message_handler(content_types=['text'])
 def get_user_message(message):
