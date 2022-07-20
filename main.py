@@ -84,7 +84,7 @@ def get_nums(your_snils, type):
     return output
 
 
-bot = telebot.TeleBot('5269737355:AAFJrXBmJyBC4y1P7YeEYNDrABk5lDZe5C8')
+bot = telebot.TeleBot('5269737355:AAGq7p1GEGiWBB8rzUBz--AQwFmbVGByC-I')
 joinedFile = open("joined.txt", "r")
 joinedUsers = set()
 for line in joinedFile:
