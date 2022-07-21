@@ -122,6 +122,13 @@ def special(message):
         for user in joinedUsers:
             joinedFile.write(user + "\n")
 
+@bot.message_handler(commands=['manual_update'])
+def manual_update(message):
+    if message.chat.id == 596114319:
+        global programms_lists
+        programms_lists = script.get_all_lists()
+        bot.send_message(message.chat.id, text="Обновление успешно.")
+
 @bot.message_handler(content_types=['text'])
 def get_user_message(message):
     t = message.text
