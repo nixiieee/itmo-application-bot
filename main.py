@@ -1,19 +1,16 @@
 import telebot
-import subprocess
-import reload
 from telebot import types
-import time
 from datetime import datetime
-import os
+import subprocess
+import schedule
+import time
 
 
 programms_lists = {}
-
-#subprocess.call("reload.py", shell=True)
-os.system("reload.py")
+subprocess.call("python3 reload.py", shell=True)
 
 def get_nums(your_snils, type):
-    programms_lists = reload.get()
+    global programms_lists
     programms_names = {"01.03.02 Прикладная математика и информатика" : "15997",
                 "09.03.01 Информатика и вычислительная техника" : "15998",
                 "09.03.02 Информационные системы и технологии" : "15999",
@@ -84,7 +81,6 @@ def get_nums(your_snils, type):
         else:
             output = "Данные о твоей заявке не найдены :("
     return output
-
 
 bot = telebot.TeleBot('5269737355:AAGq7p1GEGiWBB8rzUBz--AQwFmbVGByC-I')
 bot.remove_webhook()
