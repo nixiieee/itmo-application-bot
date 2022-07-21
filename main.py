@@ -8,13 +8,15 @@ import script
 
 programms_lists = {}
 cursnils = "0"
-flag = False
+flag = 0
 #subprocess.call("python3 reload.py", shell=True)
 
-def get_nums(your_snils, type, flag):
+def get_nums(your_snils, type, cur_time):
     global programms_lists
-    if not flag:
+    global flag
+    if abs(cur_time - flag) >= 30*60*60:
         programms_lists = script.get_all_lists()
+        flag = cur_time
     programms_names = {"01.03.02 Прикладная математика и информатика" : "15997",
                 "09.03.01 Информатика и вычислительная техника" : "15998",
                 "09.03.02 Информационные системы и технологии" : "15999",
@@ -132,43 +134,36 @@ def get_user_message(message):
         bot.send_message(message.chat.id, text="Отправь, пожалуйста, свой номер СНИЛС без пробелов и тире.")
     elif t == "Все направления":
         msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 5, flag)
-        flag = True
+        solution = get_nums(cur_snils, 5, time.time())
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         #bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "01.03.02 Прикладная математика и информатика":
         msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 0, flag)
-        flag = True
+        solution = get_nums(cur_snils, 0, time.time())
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "09.03.01 Информатика и вычислительная техника":
         msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 1, flag)
-        flag = True
+        solution = get_nums(cur_snils, 1, time.time())
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "09.03.02 Информационные системы и технологии":
         msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 2, flag)
-        flag = True
+        solution = get_nums(cur_snils, 2, time.time())
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "09.03.03 Прикладная информатика":
         msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 3, flag)
-        flag = True
+        solution = get_nums(cur_snils, 3, time.time())
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "09.03.04 Программная инженерия":
         msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 4, flag)
-        flag = True
+        solution = get_nums(cur_snils, 4, time.time())
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif (t[0] == "F" and len(t) == 12) or (len(t) == 11 and t.isdecimal()):
         cur_snils = t
-        flag = False
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("01.03.02 Прикладная математика и информатика")
         btn2 = types.KeyboardButton("09.03.01 Информатика и вычислительная техника")
