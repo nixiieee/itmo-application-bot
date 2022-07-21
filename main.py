@@ -131,45 +131,39 @@ def get_user_message(message):
     if t == "Узнать свое место в списках" or t == "Вернуться назад":
         bot.send_message(message.chat.id, text="Отправь, пожалуйста, свой номер СНИЛС без пробелов и тире.")
     elif t == "Все направления":
-        bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
+        msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
         solution = get_nums(cur_snils, 5, flag)
         flag = True
-        msg = bot.send_message(message.chat.id, '1%')
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         #bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "01.03.02 Прикладная математика и информатика":
-        bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 5, flag)
+        msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
+        solution = get_nums(cur_snils, 0, flag)
         flag = True
-        msg = bot.send_message(message.chat.id, '1%')
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "09.03.01 Информатика и вычислительная техника":
-        bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 5, flag)
+        msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
+        solution = get_nums(cur_snils, 1, flag)
         flag = True
-        msg = bot.send_message(message.chat.id, '1%')
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "09.03.02 Информационные системы и технологии":
-        bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 5, flag)
+        msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
+        solution = get_nums(cur_snils, 2, flag)
         flag = True
-        msg = bot.send_message(message.chat.id, '1%')
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "09.03.03 Прикладная информатика":
-        bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 5, flag)
+        msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
+        solution = get_nums(cur_snils, 3, flag)
         flag = True
-        msg = bot.send_message(message.chat.id, '1%')
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif t == "09.03.04 Программная инженерия":
-        bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
-        solution = get_nums(cur_snils, 5, flag)
+        msg = bot.send_message(message.chat.id, "<i>Идёт сбор данных...</i>", parse_mode='html')
+        solution = get_nums(cur_snils, 4, flag)
         flag = True
-        msg = bot.send_message(message.chat.id, '1%')
         bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id, text=solution, parse_mode='html')
         # bot.send_message(message.chat.id, solution, parse_mode='html')
     elif (t[0] == "F" and len(t) == 12) or (len(t) == 11 and t.isdecimal()):
