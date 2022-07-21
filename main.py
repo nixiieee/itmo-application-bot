@@ -4,11 +4,13 @@ import reload
 from telebot import types
 import time
 from datetime import datetime
+import os
 
 
 programms_lists = {}
 
-subprocess.call("reload.py", shell=True)
+#subprocess.call("reload.py", shell=True)
+os.system("reload.py")
 
 def get_nums(your_snils, type):
     programms_lists = reload.get()
@@ -85,6 +87,7 @@ def get_nums(your_snils, type):
 
 
 bot = telebot.TeleBot('5269737355:AAGq7p1GEGiWBB8rzUBz--AQwFmbVGByC-I')
+bot.remove_webhook()
 joinedFile = open("joined.txt", "r")
 joinedUsers = set()
 for line in joinedFile:
