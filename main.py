@@ -4,10 +4,10 @@ from datetime import datetime
 import subprocess
 import schedule
 import time
-
 import script
 
 programms_lists = {}
+cursnils = "0"
 flag = False
 #subprocess.call("python3 reload.py", shell=True)
 
