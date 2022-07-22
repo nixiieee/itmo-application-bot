@@ -88,7 +88,7 @@ def get_nums(your_snils, type, cur_time):
             output = "Данные о твоей заявке не найдены :("
     return output
 
-bot = telebot.TeleBot('5269737355:AAGq7p1GEGiWBB8rzUBz--AQwFmbVGByC-I')
+bot = telebot.TeleBot('TOKEN')
 bot.remove_webhook()
 joinedFile = open("joined.txt", "r")
 joinedUsers = set()
