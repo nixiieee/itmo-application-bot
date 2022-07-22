@@ -129,6 +129,15 @@ def manual_update(message):
         programms_lists = script.get_all_lists()
         bot.send_message(message.chat.id, text="Обновление успешно.")
 
+@bot.message_handler(commands=['users_count'])
+def manual_update(message):
+    if message.chat.id == 596114319:
+        lines_count = 0
+        f = open("joined.txt", "r")
+        for line in f:
+            lines_count += 1
+        bot.send_message(message.chat.id, text=lines_count)
+
 @bot.message_handler(content_types=['text'])
 def get_user_message(message):
     t = message.text
